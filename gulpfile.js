@@ -146,8 +146,8 @@ gulp.task('clean:prod', function (cb) {
 });
 
 gulp.task('copy-digits', function() {
-  return gulp.src(PATHS.src + '/digits')
-    .pipe(gulp.dest(PATHS.build));
+  return gulp.src(PATHS.src + '/digits/*.json')
+    .pipe(gulp.dest(PATHS.build + '/digits/'));
 })
 
 /**
