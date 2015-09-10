@@ -27,10 +27,10 @@ export class MnistData {
         labels;
         
     for (let i = 0 ; i < size; i++) {
-      trainings.push(readFileSync(join(__dirname, dataPath, `training_${i}.json`)));
+      trainings.push(JSON.parse(readFileSync(join(__dirname, dataPath, `training_${i}.json`)).toString()));
     }
-    testing = readFileSync(join(__dirname, dataPath, `testing.json`));
-    labels = readFileSync(join(__dirname, dataPath, `mnist_labels.json`));
+    testing = JSON.parse(readFileSync(join(__dirname, dataPath, `testing.json`)).toString());
+    labels = JSON.parse(readFileSync(join(__dirname, dataPath, `mnist_labels.json`)).toString());
     
     this.mnistTraining = this.parseTraining(trainings, labels);
     this.mnistTesting = this.parseTesting(testing, labels);

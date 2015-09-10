@@ -16,11 +16,15 @@ function convertImage (imagePath) {
   return new Promise(function(resolve, reject) {
     createReadStream(imagePath)
     .pipe(new PNG())
+    .on('metadata', function (data) {
+      // console.log(data);
+    })
     .on('error', function() {
       reject();
     })
     .on('parsed', function(data) {
       console.log(`${imagePath} parsed`);
+      
       var local = [];
       
       for (var y = 0; y < this.height; y++) {
@@ -73,7 +77,7 @@ function bootstrap () {
   }
   
   Promise.all(p).then((images) => {
-    let testing = images.splice(images.length -1);
+    let testing = images.splice(images.length - 1);
     completeDataset(images, testing);
   });
 }
