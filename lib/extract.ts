@@ -7,7 +7,8 @@ import * as _ from 'lodash';
 
 const PNG = NodePng.PNG;
 
-const size = 21;
+const size = 21,
+      accuracy = 1/1000;
  
 const dataPath = './digits/',
       exportPath = './digits/';
@@ -31,7 +32,7 @@ function convertImage (imagePath) {
         for (var x = 0; x < this.width; x++) {
           var idx = (this.width * y + x) << 2;
   
-          local.push(this.data[idx]);
+          local.push(Math.floor(this.data[idx] / 255 * (1/accuracy)) / (1/accuracy));
         }
       }
       

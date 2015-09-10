@@ -14,7 +14,6 @@ export class Digit {
     public pixels: number[],
     public value: number
   ) {
-    
   }
 }
 
@@ -47,9 +46,9 @@ export class MnistData {
     
     var imageData = context.getImageData(offsetX || 0, offsetY || 0, imageWidth, imageHeight);
     for (var i = 0; i < digit.length; i++) {
-      imageData.data[i * 4] = digit[i];
-      imageData.data[i * 4 + 1] = digit[i];
-      imageData.data[i * 4 + 2] = digit[i];
+      imageData.data[i * 4] = Math.floor(digit[i] * 255);
+      imageData.data[i * 4 + 1] = Math.floor(digit[i] * 255);
+      imageData.data[i * 4 + 2] = Math.floor(digit[i] * 255);
     }
     context.putImageData(imageData, offsetX || 0, offsetY || 0);
     
@@ -90,7 +89,7 @@ export class MnistData {
     for (let j = 0; j < set.length; j++) {
         
       if (tmp.length === (Math.pow(28, 2))) {
-        let index = setIndex * 3000 + Math.floor(j / (Math.pow(28, 2) - 1));
+        let index = setIndex * 3000 + Math.floor(j / (Math.pow(28, 2)));
         digits.push(new Digit(tmp, labels[index]));
         tmp = [];
       }
@@ -98,7 +97,7 @@ export class MnistData {
       
     }
     if (tmp.length === (Math.pow(28, 2))) {
-      let index = setIndex * 3000 + Math.floor(set.length / (Math.pow(28, 2) - 1));
+      let index = setIndex * 3000 + Math.floor(set.length / (Math.pow(28, 2)));
       digits.push(new Digit(tmp, labels[index]));
       tmp = [];
     }
