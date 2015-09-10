@@ -1,0 +1,5 @@
+/// <reference path="./all.ts" />
+var mnist_1 = require('./mnist');
+exports.MnistData = mnist_1.MnistData;
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1uaXN0LWRhdGEudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsaUNBQWlDO0FBRWpDLHNCQUF3QixTQUFTLENBQUM7QUFBMUIsc0NBQTBCIiwiZmlsZSI6Im1uaXN0LWRhdGEuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvLy8gPHJlZmVyZW5jZSBwYXRoPVwiLi9hbGwudHNcIiAvPlxuXG5leHBvcnQge01uaXN0RGF0YX0gZnJvbSAnLi9tbmlzdCc7Il0sInNvdXJjZVJvb3QiOiIvc291cmNlLyJ9

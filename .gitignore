@@ -1,0 +1,11 @@
+.settings/launch.json
+.DS_Store
+.tmp
+tmp
+node_modules
+typings
+lib/**/*.js
+test/**/*.js
+examples/**/*.js
+lib/digits/**/*.png
+coverage
