@@ -90,7 +90,7 @@ export class MnistData {
         
       if (tmp.length === (Math.pow(28, 2))) {
         let index = setIndex * 3000 + Math.floor(j / (Math.pow(28, 2)));
-        digits.push(new Digit(tmp, labels[index]));
+        digits.push(new Digit(tmp, labels[index - 1]));
         tmp = [];
       }
       tmp.push(set[j]);
@@ -98,7 +98,7 @@ export class MnistData {
     }
     if (tmp.length === (Math.pow(28, 2))) {
       let index = setIndex * 3000 + Math.floor(set.length / (Math.pow(28, 2)));
-      digits.push(new Digit(tmp, labels[index]));
+      digits.push(new Digit(tmp, labels[index - 1]));
       tmp = [];
     }
     return digits;
