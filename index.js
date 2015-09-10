@@ -1,1 +1,1 @@
-module.exports = require('./build/js/sigmoid');
+module.exports = require('./build/mnist-data');
