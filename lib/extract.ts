@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 
 const PNG = NodePng.PNG;
 
-const size = 2;
+const size = 21;
  
 const dataPath = './digits/',
       exportPath = './digits/';

@@ -6,7 +6,7 @@ declare module 'mnist-data' {
 
 declare module '__mnist-data/mnist' {
     export class MnistData {
-        constructor();
+        constructor(size?: number);
     }
 }
 
