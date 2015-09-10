@@ -5,7 +5,9 @@ import {join} from 'path';
 
 const dataPath = './digits',
       digitsPerFile = 3000,
-      numberOfTrainings = 50000;
+      numberOfTrainings = 50000,
+      imageWidth = 28,
+      imageHeight = 28;
 
 export class Digit {
   constructor (
@@ -39,6 +41,18 @@ export class MnistData {
     this.mnistTraining = this.parseSets(trainings, labels);
     this.mnistTesting = this.parseOneSet(testing, labels);
     this.mnistValidating = this.mnistTraining.splice(numberOfTrainings);
+  }
+  
+  static draw (digit: number[], context: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
+    
+    var imageData = context.getImageData(offsetX || 0, offsetY || 0, imageWidth, imageHeight);
+    for (var i = 0; i < digit.length; i++) {
+      imageData.data[i * 4] = digit[i];
+      imageData.data[i * 4 + 1] = digit[i];
+      imageData.data[i * 4 + 2] = digit[i];
+    }
+    context.putImageData(imageData, offsetX || 0, offsetY || 0);
+    
   }
   
   public getOneTraining (): Digit {

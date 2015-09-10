@@ -11,6 +11,7 @@ export declare class MnistData {
     private mnistValidating;
     private mnistTesting;
     constructor(numberOfTrainingToParse?: number, numberOfTestingToParse?: number);
+    static draw(digit: number[], context: CanvasRenderingContext2D, offsetX: number, offsetY: number): void;
     getOneTraining(): Digit;
     getOneValidating(): Digit;
     getOneTesting(): Digit;
