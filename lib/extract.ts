@@ -31,7 +31,7 @@ function convertImage (imagePath) {
         for (var x = 0; x < this.width; x++) {
           var idx = (this.width * y + x) << 2;
   
-          local.push(this.data[idx], this.data[idx+1], this.data[idx+2]);
+          local.push(this.data[idx]);
         }
       }
       
