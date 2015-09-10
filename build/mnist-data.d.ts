@@ -5,8 +5,16 @@ declare module 'mnist-data' {
 }
 
 declare module '__mnist-data/mnist' {
+    export class Digit {
+        pixels: number[];
+        value: number;
+        constructor(pixels: number[], value: number);
+    }
     export class MnistData {
-        constructor(size?: number);
+        constructor(numberOfTrainingToParse?: number, numberOfTestingToParse?: number);
+        getOneTraining(): Digit;
+        getOneValidating(): Digit;
+        getOneTesting(): Digit;
     }
 }
 

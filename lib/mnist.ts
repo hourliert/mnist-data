@@ -3,9 +3,11 @@
 import {readFileSync} from 'fs';
 import {join} from 'path';
 
-const dataPath = './digits';
+const dataPath = './digits',
+      digitsPerFile = 3000,
+      numberOfTrainings = 50000;
 
-class Digit {
+export class Digit {
   constructor (
     public pixels: number[],
     public value: number
@@ -16,78 +18,75 @@ class Digit {
 
 export class MnistData {
   private mnistTraining: Digit[];
+  private mnistValidating: Digit[];
   private mnistTesting: Digit[];
   
   constructor(
-    size: number = 20
+    private numberOfTrainingToParse: number = 20,
+    private numberOfTestingToParse: number = 1
   ) {
     
     let trainings = [],
         testing,
         labels;
         
-    for (let i = 0 ; i < size; i++) {
+    for (let i = 0 ; i < numberOfTrainingToParse; i++) {
       trainings.push(JSON.parse(readFileSync(join(__dirname, dataPath, `training_${i}.json`)).toString()));
     }
     testing = JSON.parse(readFileSync(join(__dirname, dataPath, `testing.json`)).toString());
     labels = JSON.parse(readFileSync(join(__dirname, dataPath, `mnist_labels.json`)).toString());
     
-    this.mnistTraining = this.parseTraining(trainings, labels);
-    this.mnistTesting = this.parseTesting(testing, labels);
+    this.mnistTraining = this.parseSets(trainings, labels);
+    this.mnistTesting = this.parseOneSet(testing, labels);
+    this.mnistValidating = this.mnistTraining.splice(numberOfTrainings);
   }
   
-  private parseTraining (trainings: number[][], labels: number[]): Digit[] {
-    
+  public getOneTraining (): Digit {
+    let index = Math.floor(Math.random() * this.mnistTraining.length);
+    return this.mnistTraining[index];
+  }
+  
+  public getOneValidating (): Digit {
+    let index = Math.floor(Math.random() * this.mnistValidating.length);
+    return this.mnistTesting[index];
+  }
+  
+  public getOneTesting (): Digit {
+    let index = Math.floor(Math.random() * this.mnistTesting.length);
+    return this.mnistTesting[index];
+  }
+  
+  private parseSets (sets: number[][], labels: number[]): Digit[] {
     let digits = [];
     
-    for (let i = 0 ; i < trainings.length; i++) {
-      
-      let set = trainings[i],
-          cpt = 0,
-          tmp = [];
-          
-      if (set.length % (3 * Math.pow(28, 2)) !== 0) {
-        throw new Error(`The length of the ${i} portion should be a multiple ${3 * Math.pow(28, 2)}`);
-      }
-      for (let j = 0; j < set.length; j += 3) {
-        
-        if (cpt === (Math.pow(28, 2))) {
-          let index = i * 3000 + Math.floor(j / (3 * Math.pow(28, 2)));
-          digits.push(new Digit(tmp, labels[index]));
-          cpt = 0;
-          tmp.length = 0;
-        }
-        tmp.push(set[j], set[j+1], set[j+2]);
-        cpt++;
-        
-      }
-      
+    for (let i = 0 ; i < sets.length; i++) {
+      digits = digits.concat(this.parseOneSet(sets[i], labels, i));
     }
     return digits;
     
   }
   
-  private parseTesting (testing: number[], labels: number[]): Digit[] {
+  private parseOneSet (set: number[], labels: number[], setIndex: number = 20): Digit[] {
+    let tmp = [],
+        digits = [];
     
-    let digits = [],
-        set = testing,
-        cpt = 0,
-        tmp = [];
-        
-    if (set.length % (3 * Math.pow(28, 2)) !== 0) {
+    if (set.length % (Math.pow(28, 2)) !== 0) {
       throw new Error(`The length of the testing portion should be a multiple ${3 * Math.pow(28, 2)}`);
     }
-    for (let j = 0; j < set.length; j += 3) {
+    for (let j = 0; j < set.length; j++) {
         
-      if (cpt === (Math.pow(28, 2))) {
-        let index = 20 * 3000 + Math.floor(j / (3 * Math.pow(28, 2)));
+      if (tmp.length === (Math.pow(28, 2))) {
+        let index = setIndex * 3000 + Math.floor(j / (Math.pow(28, 2) - 1));
         digits.push(new Digit(tmp, labels[index]));
-        cpt = 0;
-        tmp.length = 0;
+        tmp = [];
       }
-      tmp.push(set[j], set[j+1], set[j+2]);
-      cpt++;
+      tmp.push(set[j]);
       
+    }
+    if (tmp.length === (Math.pow(28, 2))) {
+      let index = setIndex * 3000 + Math.floor(set.length / (Math.pow(28, 2) - 1));
+      digits.push(new Digit(tmp, labels[index]));
+      tmp = [];
     }
     return digits;
     
