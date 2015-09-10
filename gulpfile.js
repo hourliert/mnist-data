@@ -145,6 +145,11 @@ gulp.task('clean:prod', function (cb) {
   ], cb);
 });
 
+gulp.task('copy-digits', function() {
+  return gulp.src(PATHS.src + '/digits')
+    .pipe(gulp.dest(PATHS.build));
+})
+
 /**
  * Cleaning
  */
@@ -158,6 +163,7 @@ gulp.task('default', function (cb) {
     'ci',
     'scripts:prod',
     'definitions',
+    'copy-digits',
     cb
   );
 });
