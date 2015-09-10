@@ -43,22 +43,21 @@ export class MnistData {
     for (let i = 0 ; i < trainings.length; i++) {
       
       let set = trainings[i],
-          index = i * 3000,
           cpt = 0,
           tmp = [];
           
       if (set.length % (3 * Math.pow(28, 2)) !== 0) {
         throw new Error(`The length of the ${i} portion should be a multiple ${3 * Math.pow(28, 2)}`);
       }
-      for (let j = 0; j < set.length; j++) {
+      for (let j = 0; j < set.length; j += 3) {
         
-        index += Math.floor(j / 3);
-        if (cpt === (3 * (Math.pow(28, 2) - 1))) {
+        if (cpt === (Math.pow(28, 2))) {
+          let index = i * 3000 + Math.floor(j / (3 * Math.pow(28, 2)));
           digits.push(new Digit(tmp, labels[index]));
           cpt = 0;
           tmp.length = 0;
         }
-        tmp.push(set[j]);
+        tmp.push(set[j], set[j+1], set[j+2]);
         cpt++;
         
       }
@@ -72,26 +71,24 @@ export class MnistData {
     
     let digits = [],
         set = testing,
-        index = 20 * 3000,
         cpt = 0,
         tmp = [];
         
     if (set.length % (3 * Math.pow(28, 2)) !== 0) {
       throw new Error(`The length of the testing portion should be a multiple ${3 * Math.pow(28, 2)}`);
     }
-    for (let j = 0; j < set.length; j++) {
-      
-      index += Math.floor(j / 3);
-      if (cpt === (3 * (Math.pow(28, 2) - 1))) {
+    for (let j = 0; j < set.length; j += 3) {
+        
+      if (cpt === (Math.pow(28, 2))) {
+        let index = 20 * 3000 + Math.floor(j / (3 * Math.pow(28, 2)));
         digits.push(new Digit(tmp, labels[index]));
         cpt = 0;
         tmp.length = 0;
       }
-      tmp.push(set[j]);
+      tmp.push(set[j], set[j+1], set[j+2]);
       cpt++;
       
     }
-      
     return digits;
     
   }
