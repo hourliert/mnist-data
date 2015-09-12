@@ -1,6 +1,6 @@
 {
   "name": "mnist-data",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Mnist Data ready to use with nervous.",
   "main": "index.js",
   "directories": {
