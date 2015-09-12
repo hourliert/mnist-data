@@ -12,6 +12,9 @@ declare module '__mnist-data/mnist' {
     }
     export class MnistData {
         constructor(numberOfTrainingToParse?: number, numberOfTestingToParse?: number);
+        training: IDigit[];
+        validating: IDigit[];
+        testing: IDigit[];
         static draw(digit: number[], context: CanvasRenderingContext2D, offsetX: number, offsetY: number): void;
         getOneTraining(): IDigit;
         getOneValidating(): IDigit;

@@ -41,6 +41,18 @@ export class MnistData {
     this.mnistValidating = this.mnistTraining.splice(numberOfTrainings);
   }
   
+  get training(): IDigit[] {
+    return this.mnistTraining;
+  }
+  
+  get validating(): IDigit[] {
+    return this.mnistValidating;
+  }
+  
+  get testing(): IDigit[] {
+    return this.mnistTesting;
+  }
+  
   static draw (digit: number[], context: CanvasRenderingContext2D, offsetX: number, offsetY: number) {
     
     var imageData = context.getImageData(offsetX || 0, offsetY || 0, imageWidth, imageHeight);
