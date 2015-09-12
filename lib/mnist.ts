@@ -128,7 +128,7 @@ export class MnistData {
     
     let res = Array.apply(null, Array(10)).map(Number.prototype.valueOf,0);
     
-    res.map((x, i) => {
+    res = res.map((x, i) => {
       if (i === value) {
         return 1;
       }
