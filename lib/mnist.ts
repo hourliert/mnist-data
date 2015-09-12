@@ -9,18 +9,17 @@ const dataPath = './digits',
       imageWidth = 28,
       imageHeight = 28;
 
-export class Digit {
-  constructor (
-    public pixels: number[],
-    public value: number
-  ) {
-  }
+
+export interface IDigit {
+  input: number[]; //nervous format. array of pixels
+  output: number[]; //nervous format. 10 zeros except the one which has its index equals to the digit the value.
+  value: number;
 }
 
 export class MnistData {
-  private mnistTraining: Digit[];
-  private mnistValidating: Digit[];
-  private mnistTesting: Digit[];
+  private mnistTraining: IDigit[];
+  private mnistValidating: IDigit[];
+  private mnistTesting: IDigit[];
   
   constructor(
     private numberOfTrainingToParse: number = 20,
@@ -54,22 +53,22 @@ export class MnistData {
     
   }
   
-  public getOneTraining (): Digit {
+  public getOneTraining (): IDigit {
     let index = Math.floor(Math.random() * this.mnistTraining.length);
     return this.mnistTraining[index];
   }
   
-  public getOneValidating (): Digit {
+  public getOneValidating (): IDigit {
     let index = Math.floor(Math.random() * this.mnistValidating.length);
     return this.mnistTesting[index];
   }
   
-  public getOneTesting (): Digit {
+  public getOneTesting (): IDigit {
     let index = Math.floor(Math.random() * this.mnistTesting.length);
     return this.mnistTesting[index];
   }
   
-  private parseSets (sets: number[][], labels: number[]): Digit[] {
+  private parseSets (sets: number[][], labels: number[]): IDigit[] {
     let digits = [];
     
     for (let i = 0 ; i < sets.length; i++) {
@@ -79,7 +78,7 @@ export class MnistData {
     
   }
   
-  private parseOneSet (set: number[], labels: number[], setIndex: number = 20): Digit[] {
+  private parseOneSet (set: number[], labels: number[], setIndex: number = 20): IDigit[] {
     let tmp = [],
         digits = [];
     
@@ -90,7 +89,11 @@ export class MnistData {
         
       if (tmp.length === (Math.pow(28, 2))) {
         let index = setIndex * 3000 + Math.floor(j / (Math.pow(28, 2)));
-        digits.push(new Digit(tmp, labels[index - 1]));
+        digits.push({
+          input: tmp,
+          output: this.convertDigitisToArray(labels[index - 1]),
+          value: labels[index - 1]
+        });
         tmp = [];
       }
       tmp.push(set[j]);
@@ -98,10 +101,29 @@ export class MnistData {
     }
     if (tmp.length === (Math.pow(28, 2))) {
       let index = setIndex * 3000 + Math.floor(set.length / (Math.pow(28, 2)));
-      digits.push(new Digit(tmp, labels[index - 1]));
+      digits.push({
+        input: tmp,
+        output: this.convertDigitisToArray(labels[index - 1]),
+        value: labels[index - 1]
+      });
       tmp = [];
     }
     return digits;
+    
+  }
+  
+  private convertDigitisToArray (value: number): number[] {
+    
+    let res = Array.apply(null, Array(10)).map(Number.prototype.valueOf,0);
+    
+    res.map((x, i) => {
+      if (i === value) {
+        return 1;
+      }
+      return 0;
+    })
+    
+    return res;
     
   }
 }
