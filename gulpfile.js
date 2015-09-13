@@ -168,6 +168,16 @@ gulp.task('default', function (cb) {
   );
 });
 
+gulp.task('postinstall', function (cb) {
+  runSequence(
+    'ci',
+    'scripts:prod',
+    'definitions',
+    cb
+  );
+});
+
+
 /**
  * CI
  */
