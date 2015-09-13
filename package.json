@@ -13,7 +13,7 @@
   "scripts": {
     "test": "gulp ci",
     "preinstall": "npm install --ignore-scripts",
-    "postinstall": "gulp scripts:prod",
+    "postinstall": "gulp",
     "extract": "gulp scripts:dev && node --max-old-space-size=2048 lib/extract.js"
   },
   "repository": {
